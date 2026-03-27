@@ -1,5 +1,6 @@
 // Hero Component
 import React from 'react';
+import { Link } from 'react-router-dom';  // Import Link
 import { FaGithub, FaLinkedin, FaArrowDown, FaTelegram, FaTiktok, FaInstagram } from 'react-icons/fa';
 import meImg from '../Images/me.jpg';  // Import your profile image
 import './Hero.css';
@@ -38,9 +39,10 @@ const Hero = () => {
           </div>
 
           <div className="hero-buttons">
-            <a href="/resume" className="btn-primary">View Resume</a>
-            <a href="/contact" className="btn-secondary">Contact Me</a>
+            <Link to="/resume" className="btn-primary">View Resume</Link>
+            <Link to="/contact" className="btn-secondary">Contact Me</Link>
           </div>
+          
         </div>
         <div className="hero-image">
           <div className="image-wrapper">
@@ -53,7 +55,7 @@ const Hero = () => {
           </div>
         </div>
       </div>
-      <a href="#project" className="scroll-down">
+      <a href="#projects" className="scroll-down">
         <FaArrowDown />
       </a>
     </section>
