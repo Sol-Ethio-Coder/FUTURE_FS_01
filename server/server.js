@@ -1,4 +1,3 @@
-// SERVER JS 
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -9,24 +8,12 @@ dotenv.config();
 
 const app = express();
 
-// Updated CORS configuration
-const corsOptions = {
-  origin: [
-    'http://localhost:5173',
-    'http://localhost:5000',
-    'https://solomon-ashagre.netlify.app',
-    'https://portfolio-backend-143v.onrender.com'
-  ],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+// SIMPLE CORS - Allow all origins (fixes the path-to-regexp error)
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
-};
-
-// Apply CORS middleware
-app.use(cors(corsOptions));
-
-// Handle preflight requests - FIXED: removed the invalid wildcard
-app.options('*', cors(corsOptions));
+}));
 
 app.use(express.json());
 
