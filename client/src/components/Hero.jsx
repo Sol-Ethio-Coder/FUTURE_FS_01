@@ -1,6 +1,7 @@
 // Hero Component
 import React from 'react';
 import { FaGithub, FaLinkedin, FaArrowDown, FaTelegram, FaTiktok, FaInstagram } from 'react-icons/fa';
+import meImg from '../Images/me.jpg';  // Import your profile image
 import './Hero.css';
 
 const Hero = () => {
@@ -45,7 +46,7 @@ const Hero = () => {
           <div className="image-wrapper">
             <div className="profile-image">
               <img 
-                src="/src/Images/me.jpg" 
+                src={meImg} // Use Imported image
                 alt="Profile"
               />
             </div>

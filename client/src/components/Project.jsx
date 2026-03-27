@@ -3,78 +3,86 @@ import React, { useState } from 'react';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import './Project.css';
 
+// Import your images
+import portfolioImg from '../Images/portfolio1.png';
+import teaCupImg from '../Images/tea-cup.png';
+import stcaImg from '../Images/stca.png';
+import stcaOldImg from '../Images/stca-old.png';
+import blogImg from '../Images/blog.png';
+import futureInternsImg from '../Images/future_intern.png';
+import meImg from '../Images/me.jpg';
+
 const Project = () => {
   const [filter, setFilter] = useState('all');
 
   const projects = [
-    {
-      id: 1,
-      title: 'Solomon Ashagre Portfolio',
-      description: 'Personal portfolio website showcasing my skills, experience, and services as a web developer.',
-      technologies: ['HTML5', 'CSS3', 'JavaScript', 'Netlify'],
-      image: '/src/Images/portfolio1.png',
-      github: 'https://github.com/Sol-Ethio-Coder/My-Portfolio',
-      live: 'https://solomon-ashagre-portfolio.netlify.app',
-      category: 'frontend',
-      featured: true
-    },
-    {
-      id: 2,
-      title: 'Tea Cup Project',
-      description: 'A creative web project inspired by Solomon Ashagre - showcasing elegant tea cup design and presentation.',
-      technologies: ['HTML5', 'CSS3', 'JavaScript', 'Netlify'],
-      image: '/src/Images/tea-cup.png',
-      github: 'https://github.com/Sol-Ethio-Coder/Tea_Cup_Project',
-      live: 'https://sol-tea-cup-project.netlify.app',
-      category: 'frontend',
-      featured: true
-    },
-    {
-      id: 3,
-      title: 'STCA (Sol Tutoring and Coding Academy)',
-      description: 'Educational platform for Sol Tutoring and Coding Academy offering coding courses, tutoring services, and academic support.',
-      technologies: ['HTML5', 'CSS3', 'JavaScript', 'Netlify', 'Responsive Design'],
-      image: '/src/Images/stca-old.png',
-      github: 'https://github.com/Sol-Ethio-Coder/STCA-Academy',
-      live: 'https://stca.netlify.app',
-      category: 'frontend',
-      featured: true
-    },
-    {
-      id: 4,
-      title: 'Sol Blog Website',
-      description: 'A personal blog platform sharing insights about web development, frameworks, and coding journeys.',
-      technologies: ['HTML5', 'CSS3', 'JavaScript', 'Netlify'],
-      image: '/src/Images/blog.png',
-      github: 'https://github.com/Sol-Ethio-Coder/Personal_Blog',
-      live: 'https://sol-blog-website.netlify.app',
-      category: 'frontend',
-      featured: true
-    },
-    {
-      id: 5,
-      title: 'STCA Academy',
-      description: 'Educational platform for Sol Tutoring and Coding Academy (STCA), showcasing courses and learning opportunities.',
-      technologies: ['React', 'CSS3', 'Responsive Design', 'Netlify'],
-      image: '/src/Images/stca.png',
-      github: 'https://github.com/Sol-Ethio-Coder/Sol-Tutoring-And-Coding-Academy',
-      live: 'https://stca-academy.netlify.app',
-      category: 'fullstack',
-      featured: true
-    },
-    {
-      id: 6,
-      title: 'Future Interns Portfolio',
-      description: 'Full-stack portfolio website with contact form and MongoDB integration.',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Vite'],
-      image: '/src/Images/future_intern.png',
-      github: 'https://github.com/Sol-Ethio-Coder/FUTURE_FS_01',
-      live: '#',
-      category: 'fullstack',
-      featured: false
-    }
-  ];
-
+  {
+    id: 1,
+    title: 'Solomon Ashagre Portfolio',
+    description: 'Personal portfolio website showcasing my skills, experience, and services as a web developer.',
+    technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Vite'],
+    image: portfolioImg,  // ✅ Use imported image
+    github: 'https://github.com/Sol-Ethio-Coder/FUTURE_FS_01',
+    live: 'https://solomon-ashagre-portfolio.netlify.app',
+    category: 'fullstack',
+    featured: true
+  },
+  {
+    id: 2,
+    title: 'Tea Cup Project',
+    description: 'A creative web project showcasing elegant tea cup design and presentation with CSS animations.',
+    technologies: ['HTML5', 'CSS3', 'JavaScript', 'Netlify'],
+    image: teaCupImg,  // ✅ Use imported image
+    github: 'https://github.com/Sol-Ethio-Coder/tea-cup-project',
+    live: 'https://sol-tea-cup-project.netlify.app',
+    category: 'frontend',
+    featured: true
+  },
+  {
+    id: 3,
+    title: 'STCA (Sol Tutoring and Coding Academy)',
+    description: 'Educational platform offering coding courses and tutoring services for students.',
+    technologies: ['HTML5', 'CSS3', 'JavaScript', 'Netlify'],
+    image: stcaImg,  // ✅ Use imported image
+    github: 'https://github.com/Sol-Ethio-Coder/stca',
+    live: 'https://stca.netlify.app',
+    category: 'frontend',
+    featured: true
+  },
+  {
+    id: 4,
+    title: 'STCA Academy',
+    description: 'Modern educational platform for Sol Tutoring and Coding Academy.',
+    technologies: ['React', 'CSS3', 'Responsive Design', 'Netlify'],
+    image: stcaOldImg,  // ✅ Use imported image
+    github: 'https://github.com/Sol-Ethio-Coder/stca-academy',
+    live: 'https://stca-academy.netlify.app',
+    category: 'fullstack',
+    featured: true
+  },
+  {
+    id: 5,
+    title: 'Sol Blog Website',
+    description: 'Tech blog platform sharing insights about web development and coding journeys.',
+    technologies: ['HTML5', 'CSS3', 'JavaScript', 'Netlify'],
+    image: blogImg,  // ✅ Use imported image
+    github: 'https://github.com/Sol-Ethio-Coder/sol-blog',
+    live: 'https://sol-blog-website.netlify.app',
+    category: 'frontend',
+    featured: true
+  },
+  {
+    id: 6,
+    title: 'Future Interns Portfolio',
+    description: 'Full-stack portfolio website with contact form and MongoDB integration.',
+    technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Vite'],
+    image: futureInternsImg,  // ✅ Use imported image
+    github: 'https://github.com/Sol-Ethio-Coder/FUTURE_FS_01',
+    live: '#',
+    category: 'fullstack',
+    featured: false
+  }
+];
   const categories = [
     { name: 'All Projects', value: 'all', count: projects.length },
     { name: 'Frontend', value: 'frontend', count: projects.filter(p => p.category === 'frontend').length },
