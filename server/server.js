@@ -1,4 +1,4 @@
-// SERVER JS FILE
+// SERVER JS 
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -9,21 +9,24 @@ dotenv.config();
 
 const app = express();
 
-// Updated CORS configuration - Allow your Netlify frontend
-app.use(cors({
+// Updated CORS configuration
+const corsOptions = {
   origin: [
     'http://localhost:5173',
     'http://localhost:5000',
-    'https://solomon-ashagre.netlify.app',  // Add your actual Netlify URL
-    'https://portfolio-backend-143v.onrender.com' // Add your backend
-  ], 
+    'https://solomon-ashagre.netlify.app',
+    'https://portfolio-backend-143v.onrender.com'
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
-}));
+};
 
-// Handle preflight requests
-app.options('*', cors());
+// Apply CORS middleware
+app.use(cors(corsOptions));
+
+// Handle preflight requests - FIXED: removed the invalid wildcard
+app.options('*', cors(corsOptions));
 
 app.use(express.json());
 
