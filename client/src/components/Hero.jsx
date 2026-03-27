@@ -1,0 +1,62 @@
+// Hero Component
+import React from 'react';
+import { FaGithub, FaLinkedin, FaArrowDown, FaTelegram, FaTiktok, FaInstagram } from 'react-icons/fa';
+import './Hero.css';
+
+const Hero = () => {
+  return (
+    <section className="hero">
+      <div className="hero-content">
+        <div className="hero-text">
+          <div className="greeting">Hello, I'm</div>
+          <h1>Solomon Ashagre</h1>
+          <div className="typing-wrapper">
+            <span className="typed-text">Full Stack Developer</span>
+          </div>
+          <p>
+          I'm a passionate Full Stack Developer from Addis Ababa, Ethiopia with 3+ years of experience.
+          Currently teaching Computing at Trillium International School and expanding my skills through 
+          remote internships at Codveda Technologies and Future Interns program.
+          </p>
+          <div className="social-links">
+            <a href="https://www.github.com/Sol-Ethio-Coder" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <FaGithub />
+            </a>
+            <a href="https://www.linkedin.com/in/Sol-Ethio-Coder/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <FaLinkedin />
+            </a>
+            <a href="https://t.me/Sol_Ethio_Coder" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+              <FaTelegram />
+            </a>
+            <a href="https://www.tiktok.com/@sol_ethio_coder" aria-label="Tiktok" target='_blank'>
+              <FaTiktok />
+            </a>
+             <a href="https://www.instagram.com/Sol_Ethio_Coder/" aria-label="Instagram" target='_blank'>
+              <FaInstagram />
+            </a>
+          </div>
+
+          <div className="hero-buttons">
+            <a href="/resume" className="btn-primary">View Resume</a>
+            <a href="/contact" className="btn-secondary">Contact Me</a>
+          </div>
+        </div>
+        <div className="hero-image">
+          <div className="image-wrapper">
+            <div className="profile-image">
+              <img 
+                src="/src/Images/me.jpg" 
+                alt="Profile"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="#project" className="scroll-down">
+        <FaArrowDown />
+      </a>
+    </section>
+  );
+};
+
+export default Hero;
