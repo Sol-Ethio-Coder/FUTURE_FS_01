@@ -1,3 +1,4 @@
+// Contact Component
 import React, { useState } from 'react';
 import axios from 'axios';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
@@ -13,6 +14,9 @@ const Contact = () => {
   const [status, setStatus] = useState({ type: '', message: '' });
   const [loading, setLoading] = useState(false);
 
+  // Use environment variable for API URL
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     if (status.message) setStatus({ type: '', message: '' });
@@ -24,10 +28,12 @@ const Contact = () => {
     setStatus({ type: '', message: '' });
 
     try {
-      const response = await axios.post('http://localhost:5000/api/contact', formData);
+      // Use the API_URL variable instead of hardcoded localhost
+      const response = await axios.post(`${API_URL}/api/contact`, formData);
       setStatus({ type: 'success', message: response.data.message });
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {
+      console.error('Contact form error:', error);
       setStatus({ 
         type: 'error', 
         message: error.response?.data?.error || 'Failed to send message. Please try again later.' 
