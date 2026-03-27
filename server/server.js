@@ -9,25 +9,21 @@ dotenv.config();
 
 const app = express();
 
-// CORS configuration - Allow your Netlify frontend
-const allowedOrigins = [
-  'http://localhost:5173',
-  'http://localhost:5000',
-  'https://solomon-ashagre-portfolio.netlify.app',
-  'https://your-backend.onrender.com'
-];
-
+// Updated CORS configuration - Allow your Netlify frontend
 app.use(cors({
-  origin: function(origin, callback) {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'CORS policy does not allow access from this origin.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  },
-  credentials: true
+  origin: [
+    'http://localhost:5173',
+    'http://localhost:5000',
+    'https://solomon-ashagre.netlify.app',  // Add your actual Netlify URL
+    'https://portfolio-backend-143v.onrender.com' // Add your backend
+  ], 
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// Handle preflight requests
+app.options('*', cors());
 
 app.use(express.json());
 
@@ -67,6 +63,8 @@ app.get('/api/health', (req, res) => {
 
 // Contact form endpoint
 app.post('/api/contact', async (req, res) => {
+  console.log('📨 Contact form received:', req.body);
+  
   const { name, email, subject, message } = req.body;
 
   if (!name || !email || !subject || !message) {
@@ -79,22 +77,27 @@ app.post('/api/contact', async (req, res) => {
     await newMessage.save();
     console.log(`📝 Message saved from ${email}`);
 
-    // Send email notification (optional - can skip if no email configured)
+    // Send email notification (optional)
     if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-      const mailOptions = {
-        from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
-        to: process.env.EMAIL_USER,
-        subject: `New Portfolio Contact: ${subject}`,
-        html: `
-          <h3>New Contact Form Submission</h3>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Subject:</strong> ${subject}</p>
-          <p><strong>Message:</strong></p>
-          <p>${message}</p>
-        `,
-      };
-      await transporter.sendMail(mailOptions);
+      try {
+        const mailOptions = {
+          from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
+          to: process.env.EMAIL_USER,
+          subject: `New Portfolio Contact: ${subject}`,
+          html: `
+            <h3>New Contact Form Submission</h3>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Subject:</strong> ${subject}</p>
+            <p><strong>Message:</strong></p>
+            <p>${message}</p>
+          `,
+        };
+        await transporter.sendMail(mailOptions);
+        console.log(`📧 Email sent`);
+      } catch (emailError) {
+        console.error('Email error:', emailError);
+      }
     }
 
     res.json({ success: true, message: 'Message sent successfully!' });
