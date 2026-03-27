@@ -1,4 +1,4 @@
-// Backend Development
+// SERVER JS FILE
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -9,19 +9,34 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
+// CORS configuration - Allow your Netlify frontend
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:5000',
+  'https://solomon-ashagre-portfolio.netlify.app',
+  'https://your-backend.onrender.com'
+];
+
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'CORS policy does not allow access from this origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
   credentials: true
 }));
+
 app.use(express.json());
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('✅ MongoDB connected'))
-  .catch(err => console.log('❌ MongoDB connection error:', err));
+  .catch(err => console.log('❌ MongoDB error:', err));
 
-// Contact Message Schema
+// Message Schema
 const messageSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
@@ -32,44 +47,25 @@ const messageSchema = new mongoose.Schema({
 
 const Message = mongoose.model('Message', messageSchema);
 
-// Email transporter configuration
+// Email transporter
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
-  // Add these to avoid timeout issues
-  pool: true,
-  maxConnections: 1,
-  rateDelta: 10000,
-  rateLimit: 5
 });
 
-// Test email configuration on startup
-transporter.verify((error, success) => {
-  if (error) {
-    console.error('❌ Email configuration error:', error.message);
-    console.log('💡 Make sure EMAIL_USER and EMAIL_PASS are correct in .env');
-  } else {
-    console.log('✅ Email server is ready to send messages');
-  }
-});
-
-// API Routes
+// Health check endpoint
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'Server is running' });
+  res.json({ 
+    status: 'OK', 
+    message: 'Server is running',
+    mongodb: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+  });
 });
 
-app.get('/api/messages', async (req, res) => {
-  try {
-    const messages = await Message.find().sort({ createdAt: -1 });
-    res.json(messages);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
+// Contact form endpoint
 app.post('/api/contact', async (req, res) => {
   const { name, email, subject, message } = req.body;
 
@@ -81,103 +77,30 @@ app.post('/api/contact', async (req, res) => {
     // Save to database
     const newMessage = new Message({ name, email, subject, message });
     await newMessage.save();
+    console.log(`📝 Message saved from ${email}`);
 
-    // Send email notification
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER,
-      subject: `New Portfolio Contact: ${subject}`,
-      html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: #667eea; color: white; padding: 20px; text-align: center; }
-            .content { padding: 20px; background: #f9f9f9; }
-            .field { margin-bottom: 15px; }
-            .label { font-weight: bold; color: #333; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <h2>New Contact Form Submission</h2>
-            </div>
-            <div class="content">
-              <div class="field">
-                <div class="label">Name:</div>
-                <div>${name}</div>
-              </div>
-              <div class="field">
-                <div class="label">Email:</div>
-                <div>${email}</div>
-              </div>
-              <div class="field">
-                <div class="label">Subject:</div>
-                <div>${subject}</div>
-              </div>
-              <div class="field">
-                <div class="label">Message:</div>
-                <div>${message}</div>
-              </div>
-            </div>
-          </div>
-        </body>
-        </html>
-      `,
-    };
-
-    await transporter.sendMail(mailOptions);
-
-    // Send auto-reply to user
-    const autoReplyOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: 'Thank you for contacting me!',
-      html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: #667eea; color: white; padding: 20px; text-align: center; }
-            .content { padding: 20px; background: #f9f9f9; }
-            .footer { text-align: center; padding: 20px; color: #666; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <h2>Hello ${name}!</h2>
-            </div>
-            <div class="content">
-              <p>Thank you for reaching out to me. I've received your message and will get back to you within 24-48 hours.</p>
-              <p>Here's a copy of your message:</p>
-              <hr/>
-              <p><strong>Subject:</strong> ${subject}</p>
-              <p><strong>Message:</strong></p>
-              <p>${message}</p>
-              <hr/>
-              <p>Best regards,<br/>Your Name</p>
-            </div>
-            <div class="footer">
-              <p>This is an automated response. Please do not reply to this email.</p>
-            </div>
-          </div>
-        </body>
-        </html>
-      `,
-    };
-
-    await transporter.sendMail(autoReplyOptions);
+    // Send email notification (optional - can skip if no email configured)
+    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+      const mailOptions = {
+        from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
+        to: process.env.EMAIL_USER,
+        subject: `New Portfolio Contact: ${subject}`,
+        html: `
+          <h3>New Contact Form Submission</h3>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Subject:</strong> ${subject}</p>
+          <p><strong>Message:</strong></p>
+          <p>${message}</p>
+        `,
+      };
+      await transporter.sendMail(mailOptions);
+    }
 
     res.json({ success: true, message: 'Message sent successfully!' });
   } catch (error) {
     console.error('Error:', error);
-    res.status(500).json({ error: 'Failed to send message. Please try again later.' });
+    res.status(500).json({ error: 'Failed to send message' });
   }
 });
 
