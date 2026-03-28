@@ -1,6 +1,6 @@
-// App Component
+// APP COMPONENT
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Project from './components/Project';
@@ -28,10 +28,10 @@ function App() {
           <div className="footer-content">
             <p>&copy; 2026 Solomon Ashagre. All rights reserved.</p>
             <div className="footer-links">
-              <a href="/">Home</a>
-              <a href="/projects">Projects</a>
-              <a href="/resume">Resume</a>
-              <a href="/contact">Contact</a>
+              <Link to="/">Home</Link>
+              <Link to="/projects">Projects</Link>
+              <Link to="/resume">Resume</Link>
+              <Link to="/contact">Contact</Link>
             </div>
           </div>
         </footer>
