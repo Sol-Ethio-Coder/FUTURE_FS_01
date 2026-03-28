@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';  // Import Link
 import { FaGithub, FaLinkedin, FaArrowDown, FaTelegram, FaTiktok, FaInstagram } from 'react-icons/fa';
-import meImg from '../Images/me-2.jpg';  // Import your profile image
+import meImg from '../Images/me-1.jpg';  // Import your profile image
 import './Hero.css';
 
 const Hero = () => {
