@@ -166,7 +166,10 @@ const Contact = () => {
             
             <button type="submit" className="submit-btn" disabled={loading}>
               {loading ? (
-                <>Sending...</>
+                <>
+                  <span className="loading-spinner"></span>
+                  Sending...
+                </>
               ) : (
                 <>
                   <FaPaperPlane /> Send Message
