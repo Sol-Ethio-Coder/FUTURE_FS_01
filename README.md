@@ -4,7 +4,11 @@ Full Stack Portfolio Website
 
 LIVE DEMO
 ---------
+<<<<<<< HEAD
 Frontend:  https://solomon-ashagre.netlify.app
+=======
+Frontend: https://your-portfolio.netlify.app
+>>>>>>> eb4c480b271830c9c1915fffbad6faa3fec99d70
 Backend API: https://your-backend.onrender.com
 GitHub Repository: https://github.com/yourusername/portfolio-website
 
@@ -281,7 +285,11 @@ Open Graph Tags:
 - og:title: Solomon Ashagre Portfolio
 - og:description: Full Stack Developer Portfolio
 - og:type: website
+<<<<<<< HEAD
 - og:url: https://solomon-ashagre.netlify.app
+=======
+- og:url: https://your-portfolio.netlify.app
+>>>>>>> eb4c480b271830c9c1915fffbad6faa3fec99d70
 
 BROWSER SUPPORT
 ---------------
