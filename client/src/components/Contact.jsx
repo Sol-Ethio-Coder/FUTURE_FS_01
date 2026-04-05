@@ -14,14 +14,8 @@ const Contact = () => {
   const [status, setStatus] = useState({ type: '', message: '' });
   const [loading, setLoading] = useState(false);
 
-<<<<<<< HEAD
- // Replace the API_URL line with this:
-const API_URL = import.meta.env.VITE_API_URL || 'https://portfolio-backend-143v.onrender.com';
-=======
   // Use environment variable for API URL
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
->>>>>>> eb4c480b271830c9c1915fffbad6faa3fec99d70
-
+  const API_URL = 'https://portfolio-backend-143v.onrender.com';
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     if (status.message) setStatus({ type: '', message: '' });
