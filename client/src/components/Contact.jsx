@@ -1,4 +1,4 @@
-// Contact Component
+// CONTACT COMPONENT
 import React, { useState } from 'react';
 import axios from 'axios';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
@@ -14,8 +14,9 @@ const Contact = () => {
   const [status, setStatus] = useState({ type: '', message: '' });
   const [loading, setLoading] = useState(false);
 
-  // Use environment variable for API URL
-  const API_URL = 'https://portfolio-backend-143v.onrender.com';
+  // DIRECT BACKEND URL - NO VARIABLES
+  const BACKEND_URL = 'https://portfolio-backend-143v.onrender.com';
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     if (status.message) setStatus({ type: '', message: '' });
@@ -27,15 +28,20 @@ const Contact = () => {
     setStatus({ type: '', message: '' });
 
     try {
-      // Use the API_URL variable instead of hardcoded localhost
-      const response = await axios.post(`${API_URL}/api/contact`, formData);
-      setStatus({ type: 'success', message: response.data.message });
+      console.log('Sending to:', `${BACKEND_URL}/api/contact`);
+      console.log('Data:', formData);
+      
+      const response = await axios.post(`${BACKEND_URL}/api/contact`, formData);
+      
+      console.log('Response:', response.data);
+      setStatus({ type: 'success', message: 'Message sent successfully!' });
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {
-      console.error('Contact form error:', error);
+      console.error('Full error:', error);
+      console.error('Error response:', error.response);
       setStatus({ 
         type: 'error', 
-        message: error.response?.data?.error || 'Failed to send message. Please try again later.' 
+        message: 'Failed to send message. Please try again later.' 
       });
     } finally {
       setLoading(false);
@@ -165,10 +171,7 @@ const Contact = () => {
             
             <button type="submit" className="submit-btn" disabled={loading}>
               {loading ? (
-                <>
-                  <span className="loading-spinner"></span>
-                  Sending...
-                </>
+                <>Sending...</>
               ) : (
                 <>
                   <FaPaperPlane /> Send Message
