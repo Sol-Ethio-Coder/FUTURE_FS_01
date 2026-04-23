@@ -1,4 +1,3 @@
-// CONTACT PAGE
 import React, { useState } from 'react';
 import axios from 'axios';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane, FaCheckCircle, FaTimesCircle, FaFacebook, FaTelegram, FaGithub, FaLinkedin } from 'react-icons/fa';
@@ -14,8 +13,8 @@ const Contact = () => {
   const [status, setStatus] = useState({ type: '', message: '' });
   const [loading, setLoading] = useState(false);
 
-  // Backend URL - Update with your Render backend URL when deployed
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  // DIRECT BACKEND URL - Replace with your actual Render URL
+  const API_URL = 'https://solomon-ashagre-backend.onrender.com/';
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,6 +27,7 @@ const Contact = () => {
     setStatus({ type: '', message: '' });
 
     try {
+      console.log('Sending to:', `${API_URL}/api/contact`);
       const response = await axios.post(`${API_URL}/api/contact`, formData);
       setStatus({ type: 'success', message: response.data.message });
       setFormData({ name: '', email: '', subject: '', message: '' });
@@ -69,7 +69,6 @@ const Contact = () => {
   const socialLinks = [
     { icon: <FaGithub />, name: 'GitHub', url: 'https://github.com/Sol-Ethio-Coder', color: '#333' },
     { icon: <FaLinkedin />, name: 'LinkedIn', url: 'https://linkedin.com/in/Sol-Ethio-Coder', color: '#0077b5' },
-    { icon: <FaFacebook />, name: 'Facebook', url: 'https://facebook.com/', color: '#1877f2' },
     { icon: <FaTelegram />, name: 'Telegram', url: 'https://t.me/Sol_Ethio_Coder', color: '#0088cc' }
   ];
 

@@ -2,21 +2,17 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const nodemailer = require('nodemailer');
 
 dotenv.config();
 
 const app = express();
 
-// SIMPLE CORS - Fix for path-to-regexp error
+// CORS - Allow your Netlify frontend
 app.use(cors({
-  origin: '*',
+  origin: ['http://localhost:5173', 'https://solomon-ashagre.netlify.app'],
   methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type']
 }));
-
-// DO NOT use app.options('*', cors()) - this causes the error
-// Remove that line completely
 
 app.use(express.json());
 
@@ -36,34 +32,28 @@ const messageSchema = new mongoose.Schema({
 
 const Message = mongoose.model('Message', messageSchema);
 
-// Health check endpoint
+// Health check
 app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: 'OK', 
-    message: 'Server is running',
-    mongodb: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
-  });
+  res.json({ status: 'OK', message: 'Server is running' });
 });
 
-// Contact form endpoint
+// Contact endpoint
 app.post('/api/contact', async (req, res) => {
-  console.log('📨 Contact form received:', req.body);
+  console.log('📨 Received:', req.body);
   
   const { name, email, subject, message } = req.body;
 
   if (!name || !email || !subject || !message) {
-    return res.status(400).json({ error: 'All fields are required' });
+    return res.status(400).json({ error: 'All fields required' });
   }
 
   try {
-    // Save to database
     const newMessage = new Message({ name, email, subject, message });
     await newMessage.save();
-    console.log(`📝 Message saved from ${email}`);
-
+    console.log('✅ Message saved');
     res.json({ success: true, message: 'Message sent successfully!' });
   } catch (error) {
-    console.error('Error saving message:', error);
+    console.error('Error:', error);
     res.status(500).json({ error: 'Failed to send message' });
   }
 });
