@@ -7,9 +7,9 @@ dotenv.config();
 
 const app = express();
 
-// CORS - Allow your Netlify frontend
+// CORS - Allow your frontend
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://solomon-ashagre.netlify.app'],
+  origin: ['http://localhost:5173','https://solomon-ashagre.netlify.app'],
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type']
 }));
@@ -34,7 +34,11 @@ const Message = mongoose.model('Message', messageSchema);
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'Server is running' });
+  res.json({ 
+    status: 'OK', 
+    message: 'Server is running',
+    mongodb: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+  });
 });
 
 // Contact endpoint
