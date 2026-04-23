@@ -1,8 +1,13 @@
-import React from 'react';
-import { FaDownload, FaCode, FaDatabase, FaTools, FaBriefcase, FaGraduationCap, FaLaptopCode } from 'react-icons/fa';
+// RESUME PAGE
+import React, { useState } from 'react';
+import { FaDownload, FaCode, FaDatabase, FaTools, FaBriefcase, FaGraduationCap, FaLaptopCode, FaSchool, FaAward, FaUserGraduate, FaCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
 import './Resume.css';
 
 const Resume = () => {
+  const [hoveredSkill, setHoveredSkill] = useState(null);
+  const [hoveredExp, setHoveredExp] = useState(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+
   const skills = {
     'Frontend': {
       icon: <FaCode />,
@@ -27,7 +32,8 @@ const Resume = () => {
       title: 'Remote Web Developer Intern',
       company: 'Codveda Technologies',
       period: 'August 2025 - September 2025',
-      description: 'Remote web development internship focusing on modern web technologies and full-stack development.',
+      location: 'Remote',
+      description: 'Remote web development internship focusing on modern web technologies.',
       achievements: [
         'Worked on real-world web development projects remotely',
         'Collaborated with development team on full-stack applications',
@@ -38,7 +44,8 @@ const Resume = () => {
       title: 'Computing Teacher',
       company: 'Trillium International School',
       period: '2025 - Present',
-      description: 'Teaching computer science and ICT to international students, developing curriculum.',
+      location: 'Addis Ababa, Ethiopia',
+      description: 'Teaching computer science and ICT to international students.',
       achievements: [
         'Developed engaging ICT curriculum for international students',
         'Implemented project-based learning approaches',
@@ -49,7 +56,8 @@ const Resume = () => {
       title: 'ICT Teacher',
       company: 'Montessorian Private School',
       period: '2023 - 2024',
-      description: 'Teaching ICT and computer science fundamentals to students.',
+      location: 'Addis Ababa, Ethiopia',
+      description: 'Teaching ICT and computer science fundamentals.',
       achievements: [
         'Taught computer science fundamentals to diverse student groups',
         'Created interactive coding exercises for beginners',
@@ -60,11 +68,12 @@ const Resume = () => {
       title: 'WordPress Developer Intern',
       company: 'KNS Trading plc',
       period: '2022 - 2023',
-      description: 'Internship experience developing websites using WordPress CMS.',
+      location: 'Addis Ababa, Ethiopia',
+      description: 'Internship developing websites using WordPress CMS.',
       achievements: [
         'Developed and maintained company websites using WordPress',
-        'Customized themes and plugins to meet business requirements',
-        'Implemented responsive designs for better user experience'
+        'Customized themes and plugins',
+        'Implemented responsive designs'
       ]
     }
   ];
@@ -74,39 +83,58 @@ const Resume = () => {
       degree: 'Bachelor of Science in Computer Science',
       school: 'Addis Ababa University',
       period: '2020 - 2023',
+      location: 'Addis Ababa, Ethiopia',
       description: 'One of the most prestigious universities in Ethiopia and Africa.'
     },
     {
       degree: 'Preparatory School Diploma',
       school: 'Fasiledes Preparatory School',
       period: '2018 - 2019',
+      location: 'Gondar, Ethiopia',
       description: 'Completed preparatory education in Gondar.'
     },
     {
       degree: 'High School Diploma',
       school: 'Fasiledes High School',
       period: '2016 - 2017',
+      location: 'Gondar, Ethiopia',
       description: 'Completed high school education.'
     },
     {
       degree: 'Primary School Certificate (Grade 6 - 8)',
       school: 'Felegabiyot Primary School',
       period: '2013 - 2015',
+      location: 'Gondar, Ethiopia',
       description: 'Completed primary school education from Grade 6 to 8.'
     },
     {
       degree: 'Primary School Certificate (Grade 1 - 6)',
       school: 'Abera Giyorgis Primary School',
       period: '2008 - 2012',
+      location: 'Gondar, Ethiopia',
       description: 'Completed primary school education from Grade 1 to 6.'
     }
   ];
 
+  const certifications = [
+    'Full Stack Web Dev - Codveda Technologies (2025)',
+    'Programming Fundamentals',
+    'AI And Data Science Training',
+    'Responsive Web Design',
+    'Digital Literacy',
+    'Work Readiness Training',
+    'MERN Stack Dev',
+    'WordPress Dev',
+    'Tutor Volunteer',
+    'Software Dev 101',
+    'Sales Training',
+  ];
+
   const handleDownloadPDF = () => {
+    setIsGenerating(true);
+    
     // Create a new window for printing
     const printWindow = window.open('', '_blank');
-    
-    // Get current date
     const today = new Date();
     const dateStr = today.toLocaleDateString();
     
@@ -139,6 +167,7 @@ const Resume = () => {
           .header h1 {
             font-size: 28px;
             margin-bottom: 5px;
+            color: #1a202c;
           }
           .header h2 {
             font-size: 18px;
@@ -171,6 +200,7 @@ const Resume = () => {
           .item-title {
             font-size: 14px;
             font-weight: bold;
+            color: #1a202c;
           }
           .item-date {
             font-size: 11px;
@@ -214,12 +244,17 @@ const Resume = () => {
             font-size: 11px;
             margin: 2px 0;
           }
+          .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 10px;
+            color: #999;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 10px;
+          }
           @media print {
             body {
               padding: 20px;
-            }
-            .no-print {
-              display: none;
             }
           }
         </style>
@@ -275,9 +310,7 @@ const Resume = () => {
         <div class="section">
           <div class="section-title">📜 CERTIFICATIONS</div>
           <ul>
-            <li>Full Stack Web Development - Future Interns (2026)</li>
-            <li>React.js Certification</li>
-            <li>WordPress Development Certificate</li>
+            ${certifications.map(cert => `<li>${cert}</li>`).join('')}
           </ul>
         </div>
         
@@ -291,7 +324,7 @@ const Resume = () => {
           </ul>
         </div>
         
-        <div style="margin-top: 30px; text-align: center; font-size: 10px; color: #999; border-top: 1px solid #e0e0e0; padding-top: 10px;">
+        <div class="footer">
           Resume generated on ${dateStr}
         </div>
       </body>
@@ -300,12 +333,19 @@ const Resume = () => {
     
     printWindow.document.close();
     
+    // Reset generating state immediately after window opens
+    setTimeout(() => {
+      setIsGenerating(false);
+    }, 500);
+    
     // Wait for content to load then print
     printWindow.onload = function() {
-      printWindow.print();
-      printWindow.onafterprint = function() {
-        printWindow.close();
-      };
+      setTimeout(() => {
+        printWindow.print();
+        printWindow.onafterprint = function() {
+          printWindow.close();
+        };
+      }, 100);
     };
   };
 
@@ -313,66 +353,137 @@ const Resume = () => {
     <section className="resume">
       <div className="container">
         <div className="resume-header">
-          <h2 className="section-title">Resume</h2>
-          <p className="section-subtitle">My professional background and qualifications</p>
-          <button className="download-btn" onClick={handleDownloadPDF}>
-            <FaDownload /> Download Resume 
+          <h2 className="section-title">Professional <span className="title-gradient">Resume</span></h2>
+          <div className="title-underline"></div>
+          <p className="section-subtitle">
+            My professional background and qualifications
+          </p>
+          <button className="download-btn" onClick={handleDownloadPDF} disabled={isGenerating}>
+            <FaDownload /> {isGenerating ? 'Opening PDF...' : 'Download Resume (PDF)'}
           </button>
         </div>
 
-        {/* Web View Content */}
         <div className="resume-grid">
+          {/* Education Section */}
           <div className="resume-card">
-            <h3 className="card-title"><FaGraduationCap /> Education</h3>
-            {education.map((edu, idx) => (
-              <div key={idx} className="timeline-item">
-                <div className="timeline-dot"></div>
-                <div className="timeline-content">
-                  <div className="timeline-header">
-                    <h4>{edu.degree}</h4>
-                    <span className="timeline-date">{edu.period}</span>
+            <h3 className="card-title">
+              <FaGraduationCap /> Education
+            </h3>
+            <div className="timeline">
+              {education.map((edu, idx) => (
+                <div key={idx} className="timeline-item">
+                  <div className="timeline-dot">
+                    <div className="timeline-dot-inner"></div>
                   </div>
-                  <p className="timeline-company">{edu.school}</p>
-                  <p className="timeline-description">{edu.description}</p>
+                  <div className="timeline-content">
+                    <div className="timeline-header">
+                      <h4>{edu.degree}</h4>
+                      <span className="timeline-date">
+                        <FaCalendarAlt /> {edu.period}
+                      </span>
+                    </div>
+                    <p className="timeline-company">{edu.school}</p>
+                    <p className="timeline-location">
+                      <FaMapMarkerAlt /> {edu.location}
+                    </p>
+                    <p className="timeline-description">{edu.description}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
+          {/* Experience Section */}
           <div className="resume-card">
-            <h3 className="card-title"><FaBriefcase /> Work Experience</h3>
-            {experiences.map((exp, idx) => (
-              <div key={idx} className="timeline-item">
-                <div className="timeline-dot"></div>
-                <div className="timeline-content">
-                  <div className="timeline-header">
-                    <h4>{exp.title}</h4>
-                    <span className="timeline-date">{exp.period}</span>
+            <h3 className="card-title">
+              <FaBriefcase /> Work Experience
+            </h3>
+            <div className="timeline">
+              {experiences.map((exp, idx) => (
+                <div 
+                  key={idx} 
+                  className="timeline-item"
+                  onMouseEnter={() => setHoveredExp(idx)}
+                  onMouseLeave={() => setHoveredExp(null)}
+                >
+                  <div className="timeline-dot">
+                    <div className="timeline-dot-inner"></div>
                   </div>
-                  <p className="timeline-company">{exp.company}</p>
-                  <p className="timeline-description">{exp.description}</p>
-                  <ul className="achievements-list">
-                    {exp.achievements.map((ach, i) => (
-                      <li key={i}>{ach}</li>
-                    ))}
-                  </ul>
+                  <div className="timeline-content">
+                    <div className="timeline-header">
+                      <h4>{exp.title}</h4>
+                      <span className="timeline-date">
+                        <FaCalendarAlt /> {exp.period}
+                      </span>
+                    </div>
+                    <p className="timeline-company">{exp.company}</p>
+                    <p className="timeline-location">
+                      <FaMapMarkerAlt /> {exp.location}
+                    </p>
+                    <p className="timeline-description">{exp.description}</p>
+                    <ul className="achievements-list">
+                      {exp.achievements.map((ach, i) => (
+                        <li key={i}>{ach}</li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
-          <div className="resume-card">
+          {/* Skills Section */}
+          <div className="resume-card skills-card">
             <h3 className="card-title">Technical Skills</h3>
-            {Object.entries(skills).map(([category, { icon, items }]) => (
-              <div key={category} className="skill-category">
-                <div className="skill-header">{icon}<h4>{category}</h4></div>
-                <div className="skills-list">
-                  {items.map((skill, idx) => (
-                    <span key={idx} className="skill-tag">{skill}</span>
-                  ))}
+            <div className="skills-container">
+              {Object.entries(skills).map(([category, { icon, items }]) => (
+                <div key={category} className="skill-category">
+                  <div className="skill-header">
+                    {icon}
+                    <h4>{category}</h4>
+                  </div>
+                  <div className="skills-list">
+                    {items.map((skill, idx) => (
+                      <div 
+                        key={idx} 
+                        className="skill-item"
+                        onMouseEnter={() => setHoveredSkill(skill)}
+                        onMouseLeave={() => setHoveredSkill(null)}
+                      >
+                        <span className="skill-name">{skill}</span>
+                        <div className="skill-bar">
+                          <div 
+                            className="skill-progress" 
+                            style={{ 
+                              width: hoveredSkill === skill ? '100%' : `${Math.floor(Math.random() * 30 + 70)}%`,
+                              transition: 'width 0.5s ease'
+                            }}
+                          ></div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          </div>
+
+          {/* Certifications Section */}
+          <div className="resume-card">
+            <h3 className="card-title">
+              <FaAward /> Certifications
+            </h3>
+            <div className="certifications-list">
+              {certifications.map((cert, idx) => (
+                <div key={idx} className="certification-item">
+                  <div className="cert-icon">🏆</div>
+                  <div className="cert-content">
+                    <span className="cert-name">{cert}</span>
+                    <div className="cert-glow"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
-// CONTACT COMPONENT
+// CONTACT PAGE
 import React, { useState } from 'react';
 import axios from 'axios';
-import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
+import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane, FaCheckCircle, FaTimesCircle, FaFacebook, FaTelegram, FaGithub, FaLinkedin } from 'react-icons/fa';
 import './Contact.css';
 
 const Contact = () => {
@@ -14,8 +14,8 @@ const Contact = () => {
   const [status, setStatus] = useState({ type: '', message: '' });
   const [loading, setLoading] = useState(false);
 
-  // DIRECT BACKEND URL - NO VARIABLES
-  const BACKEND_URL = 'https://portfolio-backend-143v.onrender.com';
+  // Backend URL - Update with your Render backend URL when deployed
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,20 +28,14 @@ const Contact = () => {
     setStatus({ type: '', message: '' });
 
     try {
-      console.log('Sending to:', `${BACKEND_URL}/api/contact`);
-      console.log('Data:', formData);
-      
-      const response = await axios.post(`${BACKEND_URL}/api/contact`, formData);
-      
-      console.log('Response:', response.data);
-      setStatus({ type: 'success', message: 'Message sent successfully!' });
+      const response = await axios.post(`${API_URL}/api/contact`, formData);
+      setStatus({ type: 'success', message: response.data.message });
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {
-      console.error('Full error:', error);
-      console.error('Error response:', error.response);
+      console.error('Contact form error:', error);
       setStatus({ 
         type: 'error', 
-        message: 'Failed to send message. Please try again later.' 
+        message: error.response?.data?.error || 'Failed to send message. Please try again later.' 
       });
     } finally {
       setLoading(false);
@@ -53,27 +47,38 @@ const Contact = () => {
       icon: <FaEnvelope />,
       title: 'Email',
       value: 'solash5156@gmail.com',
-      link: 'mailto:solash5156@gmail.com'
+      link: 'mailto:solash5156@gmail.com',
+      color: '#ea4335'
     },
     {
       icon: <FaPhone />,
       title: 'Phone',
       value: '+251 901436358',
-      link: 'tel:+251901436358'
+      link: 'tel:+251901436358',
+      color: '#34a853'
     },
     {
       icon: <FaMapMarkerAlt />,
       title: 'Location',
       value: 'Addis Ababa, Ethiopia',
-      link: null
+      link: null,
+      color: '#4285f4'
     }
+  ];
+
+  const socialLinks = [
+    { icon: <FaGithub />, name: 'GitHub', url: 'https://github.com/Sol-Ethio-Coder', color: '#333' },
+    { icon: <FaLinkedin />, name: 'LinkedIn', url: 'https://linkedin.com/in/Sol-Ethio-Coder', color: '#0077b5' },
+    { icon: <FaFacebook />, name: 'Facebook', url: 'https://facebook.com/', color: '#1877f2' },
+    { icon: <FaTelegram />, name: 'Telegram', url: 'https://t.me/Sol_Ethio_Coder', color: '#0088cc' }
   ];
 
   return (
     <section className="contact">
       <div className="container">
         <div className="section-header">
-          <h2 className="section-title">Get In Touch</h2>
+          <h2 className="section-title">Let's <span className="title-gradient">Connect</span></h2>
+          <div className="title-underline"></div>
           <p className="section-subtitle">
             Have a project in mind? Let's work together! I'm always open to discussing new opportunities.
           </p>
@@ -87,8 +92,10 @@ const Contact = () => {
               
               <div className="info-items">
                 {contactInfo.map((info, idx) => (
-                  <div key={idx} className="info-item">
-                    <div className="info-icon">{info.icon}</div>
+                  <div key={idx} className="info-item" style={{ '--hover-color': info.color }}>
+                    <div className="info-icon" style={{ background: info.color }}>
+                      {info.icon}
+                    </div>
                     <div className="info-details">
                       <h4>{info.title}</h4>
                       {info.link ? (
@@ -99,6 +106,25 @@ const Contact = () => {
                     </div>
                   </div>
                 ))}
+              </div>
+
+              <div className="social-section">
+                <h4>Connect with me</h4>
+                <div className="social-links">
+                  {socialLinks.map((social, idx) => (
+                    <a 
+                      key={idx} 
+                      href={social.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="social-link"
+                      style={{ '--social-color': social.color }}
+                    >
+                      {social.icon}
+                      <span>{social.name}</span>
+                    </a>
+                  ))}
+                </div>
               </div>
 
               <div className="availability">
@@ -131,6 +157,7 @@ const Contact = () => {
                 required
                 disabled={loading}
               />
+              <span className="focus-border"></span>
             </div>
             
             <div className="form-group">
@@ -143,6 +170,7 @@ const Contact = () => {
                 required
                 disabled={loading}
               />
+              <span className="focus-border"></span>
             </div>
             
             <div className="form-group">
@@ -155,6 +183,7 @@ const Contact = () => {
                 required
                 disabled={loading}
               />
+              <span className="focus-border"></span>
             </div>
             
             <div className="form-group">
@@ -167,11 +196,15 @@ const Contact = () => {
                 required
                 disabled={loading}
               ></textarea>
+              <span className="focus-border"></span>
             </div>
             
             <button type="submit" className="submit-btn" disabled={loading}>
               {loading ? (
-                <>Sending...</>
+                <>
+                  <span className="spinner"></span>
+                  Sending...
+                </>
               ) : (
                 <>
                   <FaPaperPlane /> Send Message

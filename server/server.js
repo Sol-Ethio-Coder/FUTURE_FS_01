@@ -1,3 +1,4 @@
+// SERVER FILE
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -8,19 +9,34 @@ dotenv.config();
 
 const app = express();
 
-// SIMPLE CORS - Allow all origins (fixes the path-to-regexp error)
+// CORS configuration
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:5000',
+  'https://solomon-ashagre-portfolio.netlify.app',
+  'https://portfolio-backend-143v.onrender.com'
+];
+
 app.use(cors({
-  origin: '*',
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'CORS policy does not allow access from this origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true,
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(express.json());
 
-// MongoDB Connection
+// MongoDB Connection using Atlas
 mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('✅ MongoDB connected'))
-  .catch(err => console.log('❌ MongoDB error:', err));
+  .then(() => console.log('✅ MongoDB Atlas connected successfully'))
+  .catch(err => console.log('❌ MongoDB connection error:', err));
 
 // Message Schema
 const messageSchema = new mongoose.Schema({
@@ -51,6 +67,16 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Get all messages (Admin only)
+app.get('/api/messages', async (req, res) => {
+  try {
+    const messages = await Message.find().sort({ createdAt: -1 });
+    res.json(messages);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Contact form endpoint
 app.post('/api/contact', async (req, res) => {
   console.log('📨 Contact form received:', req.body);
@@ -68,7 +94,7 @@ app.post('/api/contact', async (req, res) => {
     console.log(`📝 Message saved from ${email}`);
 
     // Send email notification (optional)
-    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+    if (process.env.EMAIL_USER && process.env.EMAIL_PASS && process.env.EMAIL_USER !== 'your-email@gmail.com') {
       try {
         const mailOptions = {
           from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
@@ -84,7 +110,21 @@ app.post('/api/contact', async (req, res) => {
           `,
         };
         await transporter.sendMail(mailOptions);
-        console.log(`📧 Email sent`);
+        console.log(`📧 Email sent to admin`);
+        
+        // Send auto-reply to user
+        const autoReplyOptions = {
+          from: `"Solomon Ashagre" <${process.env.EMAIL_USER}>`,
+          to: email,
+          subject: 'Thank you for contacting me!',
+          html: `
+            <h3>Hello ${name},</h3>
+            <p>Thank you for reaching out to me. I've received your message and will get back to you within 24-48 hours.</p>
+            <p>Best regards,<br/>Solomon Ashagre</p>
+          `,
+        };
+        await transporter.sendMail(autoReplyOptions);
+        console.log(`📧 Auto-reply sent to ${email}`);
       } catch (emailError) {
         console.error('Email error:', emailError);
       }
@@ -92,7 +132,7 @@ app.post('/api/contact', async (req, res) => {
 
     res.json({ success: true, message: 'Message sent successfully!' });
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error saving message:', error);
     res.status(500).json({ error: 'Failed to send message' });
   }
 });
