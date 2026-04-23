@@ -1,4 +1,3 @@
-// SERVER FILE
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -9,15 +8,15 @@ dotenv.config();
 
 const app = express();
 
-// SIMPLE CORS - Allow all (fix for now)
+// SIMPLE CORS - Fix for path-to-regexp error
 app.use(cors({
   origin: '*',
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Handle preflight requests
-app.options('*', cors());
+// DO NOT use app.options('*', cors()) - this causes the error
+// Remove that line completely
 
 app.use(express.json());
 
@@ -37,7 +36,7 @@ const messageSchema = new mongoose.Schema({
 
 const Message = mongoose.model('Message', messageSchema);
 
-// Health check
+// Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'OK', 
@@ -46,23 +45,25 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Contact endpoint
+// Contact form endpoint
 app.post('/api/contact', async (req, res) => {
-  console.log('📨 Received:', req.body);
+  console.log('📨 Contact form received:', req.body);
   
   const { name, email, subject, message } = req.body;
 
   if (!name || !email || !subject || !message) {
-    return res.status(400).json({ error: 'All fields required' });
+    return res.status(400).json({ error: 'All fields are required' });
   }
 
   try {
+    // Save to database
     const newMessage = new Message({ name, email, subject, message });
     await newMessage.save();
-    console.log('✅ Message saved');
+    console.log(`📝 Message saved from ${email}`);
+
     res.json({ success: true, message: 'Message sent successfully!' });
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error saving message:', error);
     res.status(500).json({ error: 'Failed to send message' });
   }
 });
