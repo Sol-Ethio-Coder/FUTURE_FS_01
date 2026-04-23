@@ -13,8 +13,8 @@ const Contact = () => {
   const [status, setStatus] = useState({ type: '', message: '' });
   const [loading, setLoading] = useState(false);
 
-  // DIRECT BACKEND URL - Replace with your actual Render URL
-  const API_URL = 'https://solomon-ashagre-backend.onrender.com/';
+  // ✅ Environment variable - changes automatically
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -69,6 +69,7 @@ const Contact = () => {
   const socialLinks = [
     { icon: <FaGithub />, name: 'GitHub', url: 'https://github.com/Sol-Ethio-Coder', color: '#333' },
     { icon: <FaLinkedin />, name: 'LinkedIn', url: 'https://linkedin.com/in/Sol-Ethio-Coder', color: '#0077b5' },
+    { icon: <FaFacebook />, name: 'Facebook', url: 'https://facebook.com/', color: '#1877f2' },
     { icon: <FaTelegram />, name: 'Telegram', url: 'https://t.me/Sol_Ethio_Coder', color: '#0088cc' }
   ];
 
