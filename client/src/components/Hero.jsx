@@ -15,8 +15,10 @@ const Hero = () => {
     'Full Stack Developer',
     'STCA Founder And Educator',
     'MERN Stack Developer',
-    'AI/Mahine Learning Enthusiast',
-    'Computing Teacher'
+    'AI/Machine Learning Enthusiast',
+    'Computing Teacher',
+    'Tutor Expert',
+    'Football Player'
   ];
 
   // Typing animation effect
