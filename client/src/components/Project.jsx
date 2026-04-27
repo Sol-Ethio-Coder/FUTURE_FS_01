@@ -46,7 +46,7 @@ const Project = () => {
       technologies: ['HTML5', 'CSS3', 'JavaScript', 'Netlify'],
       image: stcaImg,
       github: 'https://github.com/Sol-Ethio-Coder/stca',
-      live: 'https://stca.netlify.app',
+      live: 'https://stca-academy.netlify.app',
       category: 'frontend',
       featured: true,
       color: '#ed8936'
@@ -58,7 +58,7 @@ const Project = () => {
       technologies: ['React', 'CSS3', 'Responsive Design', 'Netlify'],
       image: stcaOldImg,
       github: 'https://github.com/Sol-Ethio-Coder/stca-academy',
-      live: 'https://stca-academy.netlify.app',
+      live: 'https://stca.netlify.app',
       category: 'fullstack',
       featured: true,
       color: '#9f7aea'
