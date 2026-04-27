@@ -13,8 +13,8 @@ const Contact = () => {
   const [status, setStatus] = useState({ type: '', message: '' });
   const [loading, setLoading] = useState(false);
 
-  // ✅ CORRECT BACKEND URL - No typo!
-  const API_URL = 'https://solomon-ashagre-backend.onrender.com/';
+  // Backend URL
+  const API_URL = 'https://solomon-ashagre-backend.onrender.com';
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -27,9 +27,7 @@ const Contact = () => {
     setStatus({ type: '', message: '' });
 
     try {
-      console.log('Sending to:', `${API_URL}/api/contact`);
       const response = await axios.post(`${API_URL}/api/contact`, formData);
-      console.log('Response:', response.data);
       setStatus({ type: 'success', message: response.data.message });
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {

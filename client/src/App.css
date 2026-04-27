@@ -324,3 +324,30 @@ html {
 .App > div:first-of-type {
   padding-top: 0;
 }
+/* Add these responsive utilities to your App.css */
+
+/* Responsive Container */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Fix for mobile viewport */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Ensure all content respects viewport */
+img, picture, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Prevent text overflow */
+p, h1, h2, h3, h4, h5, h6, a, span, li {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
