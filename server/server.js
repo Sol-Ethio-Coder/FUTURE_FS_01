@@ -8,7 +8,7 @@ dotenv.config();
 
 const app = express();
 
-// CORS - Allow all origins for testing
+// CORS
 app.use(cors({
   origin: '*',
   methods: ['GET', 'POST', 'OPTIONS'],
@@ -33,30 +33,34 @@ const messageSchema = new mongoose.Schema({
 
 const Message = mongoose.model('Message', messageSchema);
 
-// Email transporter configuration
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
-
-// Verify email configuration on startup
-transporter.verify((error, success) => {
-  if (error) {
-    console.error('❌ Email configuration error:', error);
-  } else {
-    console.log('✅ Email server is ready to send messages');
-  }
-});
+// Email transporter
+let transporter = null;
+if (process.env.EMAIL_USER && process.env.EMAIL_PASS && process.env.EMAIL_USER !== 'solash5156@gmail.com') {
+  transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+  
+  transporter.verify((error, success) => {
+    if (error) {
+      console.error('❌ Email configuration error:', error.message);
+    } else {
+      console.log('✅ Email server ready');
+    }
+  });
+} else {
+  console.log('⚠️ Email not configured - skipping email notifications');
+}
 
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
 });
 
-// Contact form endpoint with email notifications
+// Contact form endpoint
 app.post('/api/contact', async (req, res) => {
   console.log('📨 Contact form received:', req.body);
   
@@ -72,101 +76,31 @@ app.post('/api/contact', async (req, res) => {
     await newMessage.save();
     console.log('📝 Message saved to MongoDB');
 
-    // Send email notification to admin
-    const mailOptions = {
-      from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_USER,
-      subject: `New Portfolio Message: ${subject}`,
-      html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: #667eea; color: white; padding: 20px; text-align: center; }
-            .content { padding: 20px; background: #f9f9f9; }
-            .field { margin-bottom: 15px; }
-            .label { font-weight: bold; color: #333; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <h2>New Contact Form Submission</h2>
-            </div>
-            <div class="content">
-              <div class="field">
-                <div class="label">Name:</div>
-                <div>${name}</div>
-              </div>
-              <div class="field">
-                <div class="label">Email:</div>
-                <div>${email}</div>
-              </div>
-              <div class="field">
-                <div class="label">Subject:</div>
-                <div>${subject}</div>
-              </div>
-              <div class="field">
-                <div class="label">Message:</div>
-                <div>${message}</div>
-              </div>
-            </div>
-          </div>
-        </body>
-        </html>
-      `,
-    };
+    // Send emails if transporter is configured
+    if (transporter) {
+      try {
+        // Send admin notification
+        await transporter.sendMail({
+          from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
+          to: process.env.EMAIL_USER,
+          subject: `New Portfolio Message: ${subject}`,
+          html: `<h3>New message from ${name}</h3><p><strong>Email:</strong> ${email}</p><p><strong>Message:</strong> ${message}</p>`,
+        });
+        
+        // Send auto-reply
+        await transporter.sendMail({
+          from: `"Solomon Ashagre" <${process.env.EMAIL_USER}>`,
+          to: email,
+          subject: 'Thank you for contacting me!',
+          html: `<h3>Hello ${name},</h3><p>Thank you for your message. I'll get back to you within 24-48 hours.</p><p>Best regards,<br/>Solomon Ashagre</p>`,
+        });
+        console.log('📧 Emails sent successfully');
+      } catch (emailError) {
+        console.error('Email error:', emailError.message);
+      }
+    }
 
-    await transporter.sendMail(mailOptions);
-    console.log('📧 Email notification sent to admin');
-
-    // Send auto-reply to user
-    const autoReplyOptions = {
-      from: `"Solomon Ashagre" <${process.env.EMAIL_USER}>`,
-      to: email,
-      subject: 'Thank you for contacting me!',
-      html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: #667eea; color: white; padding: 20px; text-align: center; }
-            .content { padding: 20px; background: #f9f9f9; }
-            .footer { text-align: center; padding: 20px; color: #666; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <h2>Hello ${name}!</h2>
-            </div>
-            <div class="content">
-              <p>Thank you for reaching out to me. I've received your message and will get back to you within 24-48 hours.</p>
-              <p>Here's a copy of your message:</p>
-              <hr/>
-              <p><strong>Subject:</strong> ${subject}</p>
-              <p><strong>Message:</strong></p>
-              <p>${message}</p>
-              <hr/>
-              <p>Best regards,<br/>Solomon Ashagre</p>
-            </div>
-            <div class="footer">
-              <p>This is an automated response. Please do not reply to this email.</p>
-            </div>
-          </div>
-        </body>
-        </html>
-      `,
-    };
-
-    await transporter.sendMail(autoReplyOptions);
-    console.log('📧 Auto-reply sent to user');
-
-    res.json({ success: true, message: 'Message sent successfully! Check your email for confirmation.' });
+    res.json({ success: true, message: 'Message sent successfully!' });
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: 'Failed to send message. Please try again later.' });
