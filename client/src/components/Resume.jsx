@@ -119,9 +119,17 @@ const Resume = () => {
   ];
 
   const certifications = [
-    'Full Stack Web Development - Future Interns (2026)',
-    'React.js Certification',
-    'WordPress Development Certificate'
+    'Full Stack Web Dev - Future Interns (2026)', 
+    'Full Stack Web Dev - Codveda Technologies (2025)', 
+    'Programming Fundamentals', 
+    'AI And Data Science Training', 
+    'Responsive Web Design', 
+    'Digital Literacy', 
+    'Work Readiness Training', 
+    'MERN Stack Dev', 
+    'WordPress Dev', 
+    'Tutor Volunteer', 
+    'Software Dev 101',
   ];
 
   const handleDownloadPDF = () => {
