@@ -117,6 +117,7 @@ const Resume = () => {
   ];
 
   const certifications = [
+    'Full Stack Web Dev - Future Interns (2026)',
     'Full Stack Web Dev - Codveda Technologies (2025)',
     'Programming Fundamentals',
     'AI And Data Science Training',
@@ -127,7 +128,6 @@ const Resume = () => {
     'WordPress Dev',
     'Tutor Volunteer',
     'Software Dev 101',
-    'Sales Training',
   ];
 
   const handleDownloadPDF = () => {
