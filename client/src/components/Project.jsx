@@ -133,7 +133,7 @@ const Project = () => {
       technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Vite'],
       image: futureInternsImg,
       github: 'https://github.com/Sol-Ethio-Coder/FUTURE_FS_01',
-      live: 'https://solomon-ashagre-portfolio.netlify.app',
+      live: 'https://sol-ethio-coder.netlify.app',
       category: 'fullstack',
       featured: false,
       color: '#f56565'
