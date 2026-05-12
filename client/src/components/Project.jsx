@@ -6,7 +6,7 @@ import teaCupImg from '../Images/tea_cup.png';
 import stcaImg from '../Images/stca.png';
 import stcaOldImg from '../Images/stca_old.png';
 import blogImg from '../Images/stca_business.png';
-import futureInternsImg from '../Images/sol_crm.png';
+import futureInternsImg from '../Images/future-intern.png';
 import ageCalculatorImg from '../Images/age-calculator.png';
 import taskoImg from '../Images/tasko.png';
 import './Project.css';
@@ -107,7 +107,7 @@ const Project = () => {
       technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Vite'],
       image: futureInternsImg,
       github: 'https://github.com/Sol-Ethio-Coder/FUTURE_FS_01',
-      live: '#',
+      live: 'https://sol-ethio-coder.netlify.app/',
       category: 'fullstack',
       featured: false,
       color: '#f56565'
