@@ -7,6 +7,8 @@ import stcaImg from '../Images/stca.png';
 import stcaOldImg from '../Images/stca_old.png';
 import blogImg from '../Images/stca_business.png';
 import futureInternsImg from '../Images/sol_crm.png';
+import ageCalculatorImg from '../Images/age-calculator.png';
+import taskoImg from '../Images/tasko.png';
 import './Project.css';
 
 const Project = () => {
@@ -31,8 +33,8 @@ const Project = () => {
       title: 'Age Calculator App',
       description: 'A sleek and user-friendly age calculator that instantly computes your exact age in years, months, and days. Built as part of CodeAlpha Tech internship.',
       technologies: ['React', 'JavaScript', 'CSS3', 'Netlify'],
-      image: teaCupImg,
-      github: 'https://github.com/Sol-Ethio-Coder/age-calculator',
+      image: ageCalculatorImg,
+      github: 'https://github.com/Sol-Ethio-Coder/CodeAlpha_AgeCalculator',
       live: 'https://sol-age-calculator.netlify.app',
       category: 'frontend',
       featured: true,
@@ -43,8 +45,8 @@ const Project = () => {
       title: 'Task Management App (Tasko)',
       description: 'A modern task management application that helps users organize, track, and complete their daily tasks efficiently. Features include add, delete, and mark tasks as complete.',
       technologies: ['React', 'JavaScript', 'CSS3', 'LocalStorage', 'Netlify'],
-      image: stcaImg,
-      github: 'https://github.com/Sol-Ethio-Coder/tasko',
+      image: taskoImg,
+      github: 'https://github.com/Sol-Ethio-Coder/CodeAlpha_To-Do_App',
       live: 'https://sol-tasko.netlify.app',
       category: 'frontend',
       featured: true,
