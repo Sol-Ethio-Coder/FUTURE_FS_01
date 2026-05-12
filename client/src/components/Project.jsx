@@ -9,6 +9,8 @@ import blogImg from '../Images/sol-blog.png';
 import futureInternsImg from '../Images/future-intern.png';
 import ageCalculatorImg from '../Images/age-calculator.png';
 import taskoImg from '../Images/tasko.png';
+import solCrmImg from '../Images/sol-crm.png';
+import solTutoringAcademyImg from '../Images/sol-tutoring.png';
 import './Project.css';
 
 const Project = () => {
@@ -30,6 +32,30 @@ const Project = () => {
     },
     {
       id: 2,
+      title: 'Sol CRM - Client Manager',
+      description: 'A complete client relationship management system with authentication, client tracking, and management features. Built as part of CodeAlpha Tech internship.',
+      technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'JWT'],
+      image: solCrmImg,
+      github: 'https://github.com/Sol-Ethio-Coder/FUTURE_FS_02',
+      live: 'https://sol-crm.netlify.app',
+      category: 'fullstack',
+      featured: true,
+      color: '#f56565'
+    },
+    {
+      id: 3,
+      title: 'Sol Tutoring Academy',
+      description: 'Comprehensive educational platform offering Math, Science, Coding, Exam Prep, Game Development, and AI/ML courses for Grades 4-12.',
+      technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Stripe'],
+      image: solTutoringAcademyImg,
+      github: 'https://github.com/Sol-Ethio-Coder/FUTURE_FS_03',
+      live: 'https://sol-tutoring-academy.netlify.app',
+      category: 'fullstack',
+      featured: true,
+      color: '#38b2ac'
+    },
+    {
+      id: 4,
       title: 'Age Calculator App',
       description: 'A sleek and user-friendly age calculator that instantly computes your exact age in years, months, and days. Built as part of CodeAlpha Tech internship.',
       technologies: ['React', 'JavaScript', 'CSS3', 'Netlify'],
@@ -41,9 +67,9 @@ const Project = () => {
       color: '#48bb78'
     },
     {
-      id: 3,
+      id: 5,
       title: 'Task Management App (Tasko)',
-      description: 'A modern task management application that helps users organize, track, and complete their daily tasks efficiently. Features include add, delete, and mark tasks as complete.',
+      description: 'A modern task management application that helps users organize, track, and complete their daily tasks efficiently.',
       technologies: ['React', 'JavaScript', 'CSS3', 'LocalStorage', 'Netlify'],
       image: taskoImg,
       github: 'https://github.com/Sol-Ethio-Coder/CodeAlpha_To-Do_App',
@@ -53,7 +79,7 @@ const Project = () => {
       color: '#ed8936'
     },
     {
-      id: 4,
+      id: 6,
       title: 'Tea Cup Project',
       description: 'A creative web project showcasing elegant tea cup design with pure CSS animations and 3D effects.',
       technologies: ['HTML5', 'CSS3', 'JavaScript', 'Netlify'],
@@ -65,7 +91,7 @@ const Project = () => {
       color: '#38b2ac'
     },
     {
-      id: 5,
+      id: 7,
       title: 'STCA (Sol Tutoring and Coding Academy)',
       description: 'Educational platform offering coding courses and tutoring services for students from Grade 5-12.',
       technologies: ['HTML5', 'CSS3', 'JavaScript', 'Netlify'],
@@ -77,7 +103,7 @@ const Project = () => {
       color: '#38b2ac'
     },
     {
-      id: 6,
+      id: 8,
       title: 'STCA Academy',
       description: 'Modern educational platform with responsive design for Sol Tutoring and Coding Academy.',
       technologies: ['React', 'CSS3', 'Responsive Design', 'Netlify'],
@@ -89,25 +115,25 @@ const Project = () => {
       color: '#9f7aea'
     },
     {
-      id: 7,
+      id: 9,
       title: 'Sol Blog Website',
       description: 'Tech blog platform sharing insights about web development, frameworks, and coding journeys.',
       technologies: ['HTML5', 'CSS3', 'JavaScript', 'Netlify'],
       image: blogImg,
-      github: 'https://github.com/Sol-Ethio-Coder/sol-blog',
+      github: 'https://github.com/Sol-Ethio-Coder/Personal_Blog',
       live: 'https://sol-blog-website.netlify.app',
       category: 'frontend',
       featured: false,
       color: '#38b2ac'
     },
     {
-      id: 8,
+      id: 10,
       title: 'Future Interns Portfolio',
-      description: 'Full-stack portfolio with contact form, MongoDB integration, and email notifications.',
+      description: 'Full-stack portfolio with contact form, MongoDB integration, and email notifications. Built during Future Interns internship program.',
       technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Vite'],
       image: futureInternsImg,
       github: 'https://github.com/Sol-Ethio-Coder/FUTURE_FS_01',
-      live: 'https://sol-ethio-coder.netlify.app/',
+      live: 'https://solomon-ashagre-portfolio.netlify.app',
       category: 'fullstack',
       featured: false,
       color: '#f56565'
