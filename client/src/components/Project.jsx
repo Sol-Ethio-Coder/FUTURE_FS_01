@@ -1,4 +1,3 @@
-// PROJECT PAGE
 import React, { useState } from 'react';
 import { FaGithub, FaExternalLinkAlt, FaStar, FaEye } from 'react-icons/fa';
 // Import all project images
@@ -29,6 +28,30 @@ const Project = () => {
     },
     {
       id: 2,
+      title: 'Age Calculator App',
+      description: 'A sleek and user-friendly age calculator that instantly computes your exact age in years, months, and days. Built as part of CodeAlpha Tech internship.',
+      technologies: ['React', 'JavaScript', 'CSS3', 'Netlify'],
+      image: teaCupImg,
+      github: 'https://github.com/Sol-Ethio-Coder/age-calculator',
+      live: 'https://sol-age-calculator.netlify.app',
+      category: 'frontend',
+      featured: true,
+      color: '#48bb78'
+    },
+    {
+      id: 3,
+      title: 'Task Management App (Tasko)',
+      description: 'A modern task management application that helps users organize, track, and complete their daily tasks efficiently. Features include add, delete, and mark tasks as complete.',
+      technologies: ['React', 'JavaScript', 'CSS3', 'LocalStorage', 'Netlify'],
+      image: stcaImg,
+      github: 'https://github.com/Sol-Ethio-Coder/tasko',
+      live: 'https://sol-tasko.netlify.app',
+      category: 'frontend',
+      featured: true,
+      color: '#ed8936'
+    },
+    {
+      id: 4,
       title: 'Tea Cup Project',
       description: 'A creative web project showcasing elegant tea cup design with pure CSS animations and 3D effects.',
       technologies: ['HTML5', 'CSS3', 'JavaScript', 'Netlify'],
@@ -36,53 +59,53 @@ const Project = () => {
       github: 'https://github.com/Sol-Ethio-Coder/tea-cup-project',
       live: 'https://sol-tea-cup-project.netlify.app',
       category: 'frontend',
-      featured: true,
-      color: '#48bb78'
+      featured: false,
+      color: '#38b2ac'
     },
     {
-      id: 3,
+      id: 5,
       title: 'STCA (Sol Tutoring and Coding Academy)',
       description: 'Educational platform offering coding courses and tutoring services for students from Grade 5-12.',
       technologies: ['HTML5', 'CSS3', 'JavaScript', 'Netlify'],
       image: stcaImg,
       github: 'https://github.com/Sol-Ethio-Coder/stca',
-      live: 'https://stca-academy.netlify.app',
+      live: 'https://stca.netlify.app',
       category: 'frontend',
-      featured: true,
-      color: '#ed8936'
+      featured: false,
+      color: '#38b2ac'
     },
     {
-      id: 4,
+      id: 6,
       title: 'STCA Academy',
       description: 'Modern educational platform with responsive design for Sol Tutoring and Coding Academy.',
       technologies: ['React', 'CSS3', 'Responsive Design', 'Netlify'],
       image: stcaOldImg,
       github: 'https://github.com/Sol-Ethio-Coder/stca-academy',
-      live: 'https://stca.netlify.app',
+      live: 'https://stca-academy.netlify.app',
       category: 'fullstack',
-      featured: true,
+      featured: false,
       color: '#9f7aea'
     },
     {
-      id: 5,
-      title: 'Sol Tutoring Academy',
+      id: 7,
+      title: 'Sol Blog Website',
       description: 'Tech blog platform sharing insights about web development, frameworks, and coding journeys.',
       technologies: ['HTML5', 'CSS3', 'JavaScript', 'Netlify'],
       image: blogImg,
-      github: 'https://github.com/Sol-Ethio-Coder/FUTURE_FS_03',
-      live: 'https://sol-tutoring-academy.netlify.app',
+      github: 'https://github.com/Sol-Ethio-Coder/sol-blog',
+      live: 'https://sol-blog-website.netlify.app',
       category: 'frontend',
-      featured: true,
+      featured: false,
       color: '#38b2ac'
     },
     {
-      id: 6,
-      title: 'Sol CRM Project',
+      id: 8,
+      title: 'Future Interns Portfolio',
       description: 'Full-stack portfolio with contact form, MongoDB integration, and email notifications.',
       technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Vite'],
       image: futureInternsImg,
-      github: 'https://github.com/Sol-Ethio-Coder/FUTURE_FS_02',
-      live: 'https://sol-crm.netlify.app',
+      github: 'https://github.com/Sol-Ethio-Coder/FUTURE_FS_01',
+      live: '#',
       category: 'fullstack',
       featured: false,
       color: '#f56565'
@@ -103,7 +126,7 @@ const Project = () => {
     <section id="projects" className="projects">
       <div className="container">
         <div className="section-header">
-          <h2 className="section-title">Featured <span className="title-gradient">Projects</span></h2>
+          <h2 className="section-title">My <span className="title-gradient">Projects</span></h2>
           <div className="title-underline"></div>
           <p className="section-subtitle">
             Here are some of my recent works. Each project represents a unique challenge I've solved.
