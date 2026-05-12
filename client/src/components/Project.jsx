@@ -5,7 +5,7 @@ import portfolioImg from '../Images/main_port.png';
 import teaCupImg from '../Images/tea_cup.png';
 import stcaImg from '../Images/stca.png';
 import stcaOldImg from '../Images/stca_old.png';
-import blogImg from '../Images/stca_business.png';
+import blogImg from '../Images/sol-blog.png';
 import futureInternsImg from '../Images/future-intern.png';
 import ageCalculatorImg from '../Images/age-calculator.png';
 import taskoImg from '../Images/tasko.png';
