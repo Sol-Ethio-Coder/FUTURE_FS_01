@@ -3,8 +3,8 @@ import { FaGithub, FaExternalLinkAlt, FaStar, FaEye } from 'react-icons/fa';
 // Import all project images
 import portfolioImg from '../Images/main_port.png';
 import teaCupImg from '../Images/tea_cup.png';
-import stcaImg from '../Images/stca.png';
-import stcaOldImg from '../Images/stca_old.png';
+import stcaImg from '../Images/stca_old.png';
+import stcaOldImg from '../Images/stca.png';
 import blogImg from '../Images/sol-blog.png';
 import futureInternsImg from '../Images/future-intern.png';
 import ageCalculatorImg from '../Images/age-calculator.png';
